@@ -53,6 +53,19 @@ pipeline {
                 )
             }
         }
+        stage('SmokeTest') {
+             when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    response = http.response {
+                        url='http://$KUBE_MASTER_IP:8081'
+                        
+                    }
+                }
+            }    
+        }
         stage('DeployToProduction') {
             when {
                 branch 'master'
